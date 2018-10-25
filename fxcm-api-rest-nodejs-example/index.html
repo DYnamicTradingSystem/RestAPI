@@ -1,0 +1,72 @@
+<html>
+
+<head>
+<title>My Node</title>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<!--<script src="/server2.js"></script>-->
+
+<script>
+//const io = require('socket.io-client');
+var socket = io('http://localhost:3001');
+
+
+var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
+document.getElementById("r").innerHTML = "Now :" + d ;
+	
+	
+
+socket.on('news3', function (data) {
+
+	 d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
+	document.getElementById("r").innerHTML = "News3 event received from server at:" + d ;
+	alert("Hello! I am an alert box!!" + d);
+});
+
+socket.on('news', function (data) {
+
+var json = JSON.parse(data);
+
+/*document.write(
+"<h1>EXPRESS SERVER</h1>Hello World!" 
++ "<br>Value: " + json["hello"]
+);
+*/
+console.log(data);
+
+
+//socket.emit('event2', { my: 'dataClient' });
+
+});
+
+  function launch_event3()
+  {
+  
+  
+	document.getElementById("cmd").innerHTML = "Calling server to trigger event3!";
+	
+	//var socket2 = io('http://localhost:3001');
+  
+    socket.emit('event3', { my: 'dataClient3' });
+  }
+</script>
+
+
+
+
+</head>
+<body>
+
+<h1>EXPRESS SERVER loading</h1>
+<hr>
+<form><input type=button value=trigger_event3 onclick="launch_event3()">
+</form>
+<hr>
+<p id="cmd">my Command</p>
+<hr>
+<p id="r">Hello World</p>
+<hr>
+
+</body>
+</html>
